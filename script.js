@@ -5,11 +5,20 @@
 const answerArray = ['rock', 'paper', 'scissors']
 const randomIndex = Math.floor(Math.random()*3)
 const computerAnswer = answerArray[randomIndex]
-let userAnswer;
 const results = document.querySelector('#result');
 const refreshButton = document.querySelector('#refresh')
+const paperButton = document.querySelector('#paper')
+const scissorsButton = document.querySelector('#scissors')
+const rockButton = document.querySelector('#rock')
 
-const comparing = ()=>{
+
+const handleButtonClick = (event) => {
+    userAnswer = event.target.id;
+    comparing(userAnswer);
+    console.log(event)
+};
+
+const comparing = (userAnswer)=>{
     let message;
     if (userAnswer === computerAnswer) {
         message = `You chose ${userAnswer} and the computer chose ${computerAnswer}, its a tie!`
@@ -19,24 +28,12 @@ const comparing = ()=>{
         message = `You chose ${userAnswer} and the computer chose ${computerAnswer}, you lost!`
     }
     results.innerHTML = message
+    scissorsButton.removeEventListener('click', handleButtonClick);
+    paperButton.removeEventListener('click', handleButtonClick);
+    rockButton.removeEventListener('click', handleButtonClick);
 }
 
-const rockButton = document.querySelector('#rock')
-rockButton.addEventListener('click', ()=>{
-    userAnswer = 'rock';
-    comparing()
-})
-
-const paperButton = document.querySelector('#paper')
-paperButton.addEventListener('click', ()=>{
-    userAnswer = 'paper';
-    comparing()
-})
-
-const scissorsButton = document.querySelector('#scissors')
-scissorsButton.addEventListener('click', ()=>{
-    userAnswer = 'scissors';
-    comparing()
-})
-
+rockButton.addEventListener('click', handleButtonClick);
+paperButton.addEventListener('click', handleButtonClick);
+scissorsButton.addEventListener('click', handleButtonClick);
 refreshButton.addEventListener('click', ()=>location.reload())
